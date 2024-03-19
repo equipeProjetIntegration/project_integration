@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('notificationEntreprise', function ($table) {
             $table->id();
-            $table->integer('identreprise'); // foreign
+            $table->unsignedBigInteger('identreprise'); // foreign
             // linking the foreign key
             $table->foreign('identreprise')->references('id')->on('entreprise')->onDelete('cascade')->onUpdate('cascade');
         });
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::drop('notificationEntreprise');
+        Schema::dropIfExists('notificationEntreprise');
     }
 };

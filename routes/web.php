@@ -15,4 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// creating or deleting tables
 Route::get('/', [Controller::class,"InitializeDB"]);
+Route::get('/deletetables', [Controller::class,"deleteTables"]);
+// filling the database
+Route::get('/seeddb', [Controller::class,"SeedDB"]);

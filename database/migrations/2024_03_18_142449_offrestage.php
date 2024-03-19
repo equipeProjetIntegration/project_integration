@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('offrestage', function ($table) {
             $table->id();
-            $table->integer('idEntreprise'); // foreign
+            $table->unsignedBigInteger('idEntreprise'); // foreign
             $table->enum('status',['disponible','non disponible']); // modif to apply later
             $table->string('titre');
             $table->string('description',255);
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::drop('offrestage');
+        Schema::dropIfExists('offrestage');
     }
 };

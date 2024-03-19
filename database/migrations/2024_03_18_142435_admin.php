@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('etudiant', function ($table) {
+        Schema::create('admin', function ($table) {
             $table->id();
             $table->string('nom',20);
             $table->string('prenom',20);
             $table->string('email');
             $table->string('mdp');
-            $table->enum('typeStage',['initiation','perfectionnement','PFE']);
-            $table->string('domaineEtude');
-            $table->string('specialite');
         });
     }
 
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::drop('etudiant');
+        Schema::dropIfExists('admin');
     }
 };

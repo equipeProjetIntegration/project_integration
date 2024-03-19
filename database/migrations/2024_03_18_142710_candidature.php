@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('candidature', function ($table) {
             $table->id();
-            $table->integer('idEtudiant'); // foreign
-            $table->integer('idOffre'); // foreign
+            $table->unsignedBigInteger('idEtudiant'); // foreign
+            $table->unsignedBigInteger('idOffre'); // foreign
             $table->date('dateSoumission');
             $table->enum('status',['enAttend','acceptee','refusee']);
             $table->string('cv'); // file path?
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::drop('candidature');
+        Schema::dropIfExists('candidature');
     }
 };

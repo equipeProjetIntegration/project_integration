@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('reponse', function ($table) {
             $table->id();
-            $table->integer('idQues'); // foreign
-            $table->integer('idAdmin'); // foreign
+            $table->unsignedBigInteger('idQues'); // foreign
+            $table->unsignedBigInteger('idAdmin'); // foreign
             $table->string('contenu',255);
             $table->date('date');
             // linking the foreign keys
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::drop('reponse');
+        Schema::dropIfExists('reponse');
     }
 };

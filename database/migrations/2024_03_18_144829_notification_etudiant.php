@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('notificationEtudiant', function ($table) {
             $table->id();
-            $table->integer('idetudiant'); // foreign
+            $table->unsignedBigInteger('idetudiant'); // foreign
             // linking the foreign key
             $table->foreign('idetudiant')->references('id')->on('etudiant')->onDelete('cascade')->onUpdate('cascade');
         });
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::drop('notificationEtudiant');
+        Schema::dropIfExists('notificationEtudiant');
     }
 };

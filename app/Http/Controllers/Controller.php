@@ -10,15 +10,23 @@ use Illuminate\Support\Facades\Artisan;
 
 use Illuminate\Routing\Controller as BaseController;
 
-
-use App\Models\User;
-
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
     function InitializeDB() {
         Artisan::call('migrate');
+    }
+
+    function deleteTables() {
+        Artisan::call('migrate:rollback');
+    }
+
+    function SeedDB() {
+        if (!DB::select('select COUNT(id) as Ntables FROM migrations')[0]->Ntables) {
+                 $this->InitializeDB();
+        };
+        Artisan::call('db:seed');
     }
 
     // function InitializeDB() {

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('question', function ($table) {
             $table->id();
-            $table->integer('idEtudiant'); // foreign
+            $table->unsignedBigInteger('idEtudiant'); // foreign
             $table->string('contenu',255);
             $table->date('date');
             $table->enum('status',['enAttend','envoyee']);
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::drop('question');
+        Schema::dropIfExists('question');
     }
 };
