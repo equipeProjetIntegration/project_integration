@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admin', function ($table) {
+        Schema::create('user', function ($table) {
             $table->id();
-            $table->string('nom',20);
-            $table->string('prenom',20);
+            $table->string('nom',50);
             $table->string('email');
             $table->string('mdp');
+            $table->string('role',100);
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admin');
+        Schema::dropIfExists('user');
     }
 };

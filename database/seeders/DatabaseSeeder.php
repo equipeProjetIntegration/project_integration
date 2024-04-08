@@ -16,110 +16,78 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
        // delete old data
-       DB::table('admin')->delete();
-       DB::table('candidature')->delete();
-       DB::table('entreprise')->delete();
+       DB::table('user')->delete();
        DB::table('etudiant')->delete();
-       DB::table('notificationentreprise')->delete();
-       DB::table('notificationetudiant')->delete();
-       DB::table('offrestage')->delete();
-       DB::table('question')->delete();
-       DB::table('reponse')->delete();
+       DB::table('entreprise')->delete();
+       DB::table('offre')->delete();
+       DB::table('demande')->delete();
+       DB::table('stage')->delete();
         
        $faker = Faker::create();
 
        // format : columnName => $faker-> someVarTypeSettings
        foreach (range(1, 10) as $index) {
-        DB::table('entreprise')->insert([
+        DB::table('user')->insert([
             'id' => $faker->unique()->numberBetween(1, 100),
-            'nom' => $faker->company,
+            'nom' => $faker->name,
             'email' => $faker->unique()->safeEmail,
             'mdp' => $faker->sha256(), // return hashed password
-            'sectActivite' => $faker->bs,
-            'infoSupp' => $faker->text(50),
+            'role' => $faker->jobTitle(),
         ]);
        }
 
        foreach (range(1, 10) as $index) {
         DB::table('etudiant')->insert([
-            'id' => $faker->unique()->numberBetween(1, 100),
-            'nom' => $faker->lastName,
-            'prenom' => $faker->firstName,
-            'email' => $faker->unique()->safeEmail,
-            'mdp' => $faker->sha256(), // return hashed password
-            'typeStage' => $faker->randomElement(['initiation', 'perfectionnement', 'PFE']),
+            'nce' => $faker->unique()->numberBetween(1, 100),
+            'idUser' => $faker->randomElement(DB::table('user')->pluck('id')),
             'domaineEtude' => $faker->text(10),
+            'typeStage' => $faker->randomElement(['initiation', 'perfectionnement', 'PFE']),
             'specialite' => $faker->text(10),
+            'niveau' => $faker->text(10),
+            'ncin' => $faker->numberBetween(11111111,99999999),
         ]);
        }
 
        foreach (range(1, 10) as $index) {
-        DB::table('admin')->insert([
-            'id' => $faker->unique()->numberBetween(1, 100),
-            'nom' => $faker->lastName,
-            'prenom' => $faker->firstName,
-            'email' => $faker->unique()->safeEmail,
-            'mdp' => $faker->sha256(), // return hashed password
+        DB::table('entreprise')->insert([
+            'numeroSIRET' => $faker->unique()->text(15),
+            'idUser' => $faker->randomElement(DB::table('user')->pluck('id')),
+            'secteurActivite' => $faker->bs,
         ]);
        }
 
        foreach (range(1, 10) as $index) {
-        DB::table('question')->insert([
+        DB::table('offre')->insert([
             'id' => $faker->unique()->numberBetween(1, 100),
-            'idEtudiant' => $faker->randomElement(DB::table('etudiant')->pluck('id')),
-            'contenu' => $faker->text,
-            'date' => $faker->date,
-            'status' => $faker->randomElement(['enAttend', 'envoyee']),
-        ]);
-       }
-
-       foreach (range(1, 10) as $index) {
-        DB::table('offrestage')->insert([
-            'id' => $faker->unique()->numberBetween(1, 100),
-            'idEntreprise' => $faker->randomElement(DB::table('entreprise')->pluck('id')),
+            'idEntreprise' => $faker->numberBetween(1, 100),
             'status' => $faker->randomElement(['disponible', 'non disponible']),
             'titre' => $faker->jobTitle,
             'description' => $faker->text(20), // return hashed password
             'domaine' => $faker->text(20),
-            'localisation' => $faker->address,
-            'dateLimite' => $faker->date,
-            'typeStage' => $faker->randomElement(['remunere', 'nonRemunere']),
+            'dateDebut' => $faker->date,
+            'dateFin' => $faker->date,
+            'typeOffre' => $faker->text(20),
             'cahierCharge' => $faker->url,
         ]);
        }
 
        foreach (range(1, 10) as $index) {
-        DB::table('reponse')->insert([
+        DB::table('demande')->insert([
             'id' => $faker->unique()->numberBetween(1, 100),
-            'idQues' => $faker->randomElement(DB::table('question')->pluck('id')),
-            'idAdmin' => $faker->randomElement(DB::table('admin')->pluck('id')),
-            'contenu' => $faker->text,
-            'date' => $faker->date,
+            'idEtudiant' => $faker->randomElement(DB::table('etudiant')->pluck('nce')),
+            'idOffreDeStage' => $faker->randomElement(DB::table('offre')->pluck('id')),
+            'idCandidature' => $faker->numberBetween(1, 100),
+            'statut' => $faker->randomElement([1,0]),
+            'DateSoumission' => $faker->date,
+            'cv' => $faker->randomElement([1,0]),
         ]);
        }
 
        foreach (range(1, 10) as $index) {
-        DB::table('candidature')->insert([
+        DB::table('stage')->insert([
             'id' => $faker->unique()->numberBetween(1, 100),
-            'idEtudiant' => $faker->randomElement(DB::table('etudiant')->pluck('id')),
-            'idOffre' => $faker->randomElement(DB::table('offrestage')->pluck('id')),
-            'dateSoumission' => $faker->date,
-            'status' => $faker->randomElement(['enAttend', 'acceptee', 'refusee']),
-            'cv' => $faker->url,
-        ]);
-       }
-
-       foreach (range(1, 10) as $index) {
-           DB::table('notificationetudiant')->insert([
-               'id' => $faker->unique()->numberBetween(1, 100),
-               'idetudiant' => $faker->randomElement(DB::table('etudiant')->pluck('id')),
-           ]);
-       }
-
-       foreach (range(1, 10) as $index) {
-        DB::table('notificationentreprise')->insert([
-            'id' => $faker->unique()->numberBetween(1, 100),
-            'identreprise' => $faker->randomElement(DB::table('entreprise')->pluck('id')),
+            'dateDebut' => $faker->date,
+            'dateFin' => $faker->date,
         ]);
        }
     }

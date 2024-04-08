@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notificationEtudiant', function ($table) {
+        Schema::create('stage', function ($table) {
             $table->id();
-            $table->unsignedBigInteger('idetudiant'); // foreign
-            // linking the foreign key
-            $table->foreign('idetudiant')->references('id')->on('etudiant')->onDelete('cascade')->onUpdate('cascade');
+            $table->date('dateDebut');
+            $table->date('dateFin');
         });
     }
 
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('notificationEtudiant');
+        Schema::dropIfExists('stage');
     }
 };

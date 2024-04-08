@@ -9,12 +9,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('entreprise', function ($table) {
-            $table->id();
-            $table->string('nom');
-            $table->string('email');
-            $table->string('mdp');
-            $table->string('sectActivite');
-            $table->string('infoSupp',255);
+            $table->string('numeroSIRET')->primary();
+            $table->unsignedBigInteger('idUser'); // foreign
+            $table->string('secteurActivite');
+            // linking the foreign key
+            $table->foreign('idUser')->references('id')->on('user')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -11,19 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('offrestage', function ($table) {
+        Schema::create('offre', function ($table) {
             $table->id();
             $table->unsignedBigInteger('idEntreprise'); // foreign
             $table->enum('status',['disponible','non disponible']); // modif to apply later
             $table->string('titre');
             $table->string('description',255);
             $table->string('domaine');
-            $table->string('localisation');
-            $table->date('dateLimite');
-            $table->enum('typeStage',['remunere','nonRemunere']); // modif to apply later
+            $table->date('dateDebut');
+            $table->date('dateFin');
+            $table->string('typeOffre');
             $table->string('cahierCharge'); // file path?
-            // linking the foreign key
-            $table->foreign('idEntreprise')->references('id')->on('entreprise')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('offrestage');
+        Schema::dropIfExists('offre');
     }
 };
